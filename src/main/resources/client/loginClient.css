@@ -1,0 +1,10 @@
+.root{
+    /*-fx-background-color: #F5F5F5;*/
+    -fx-pref-width: 400px;
+    -fx-pref-height: 150px;
+}
+
+.grid{
+    -fx-pref-height: 120px;
+    -fx-padding: 1px;
+}
