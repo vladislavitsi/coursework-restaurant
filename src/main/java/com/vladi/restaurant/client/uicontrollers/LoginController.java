@@ -1,4 +1,4 @@
-package com.vladi.restaurant.client.controllers;
+package com.vladi.restaurant.client.uicontrollers;
 
 import com.vladi.restaurant.client.SceneManager;
 import javafx.fxml.FXML;
@@ -20,6 +20,6 @@ public final class LoginController {
     @FXML
     public void implementConnect(){
         System.out.println(textField1.getText());
-        SceneManager.getInstance().changeScene(SceneManager.Scenes.CLIENT);
+        SceneManager.getInstance().changeScene(SceneManager.Views.CLIENT);
     }
 }

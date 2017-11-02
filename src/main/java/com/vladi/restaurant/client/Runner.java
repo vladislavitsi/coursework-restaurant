@@ -12,7 +12,7 @@ public class Runner extends Application {
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
         SceneManager.getInstance().setStage(primaryStage);
-        SceneManager.getInstance().changeScene(SceneManager.Scenes.LOGIN_CLIENT);
+        SceneManager.getInstance().changeScene(SceneManager.Views.LOGIN_CLIENT);
         primaryStage.show();
     }
 }

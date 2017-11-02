@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="156.0" prefWidth="388.0" styleClass="root" stylesheets="@loginClient.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vladi.restaurant.client.controllers.LoginController">
+<AnchorPane prefHeight="156.0" prefWidth="388.0" styleClass="root" stylesheets="@../styles/loginClient.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vladi.restaurant.client.uicontrollers.LoginController">
     <children>
         <GridPane id="grid" layoutX="14.0" layoutY="3.0" prefHeight="121.0" prefWidth="378.0" styleClass="grid">
             <columnConstraints>

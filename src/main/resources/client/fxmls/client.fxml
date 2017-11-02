@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="root" stylesheets="@client.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vladi.restaurant.client.controllers.ClientController">
+<BorderPane styleClass="root" stylesheets="@../styles/client.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vladi.restaurant.client.uicontrollers.ClientController">
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -62,17 +62,17 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Menu" GridPane.rowIndex="1">
+            <Button mnemonicParsing="false" onAction="#openMenu" text="Menu" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" text="History" GridPane.rowIndex="2">
+            <Button mnemonicParsing="false" onAction="#openHistory" text="History" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Settings" GridPane.rowIndex="3">
+            <Button mnemonicParsing="false" onAction="#openSettings" text="Settings" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>

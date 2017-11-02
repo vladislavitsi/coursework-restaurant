@@ -1,53 +1,50 @@
 package com.vladi.restaurant.client;
 
+import com.vladi.restaurant.client.managing.ResourceManager;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class SceneManager {
-    public enum Scenes{
-        LOGIN_CLIENT("Login", 400, 150){
-            @Override
-            Scene getScene() {
-                try {
-                    return new Scene(FXMLLoader.load(getClass().getResource("/client/LoginClient.fxml")));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        },
-        CLIENT("Client", 800, 540){
-            @Override
-            Scene getScene() {
-                try {
-                    return new Scene(FXMLLoader.load(getClass().getResource("/client/Client.fxml")));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        };
+    public enum Views {
+        LOGIN_CLIENT,
+        CLIENT,
+        MENU,
+        SETTINGS,
+        NEW_ORDER,
+        HISTORY,
+        ORDER_REPRESENTATION;
 
         private final String title;
-        private final int width;
-        private final int height;
+        private final String resource;
 
-        public String getTitle() {
+        private String getTitle() {
             return title;
         }
 
-        Scenes(String title, int width, int height) {
-            this.title = title;
-            this.width = width;
-            this.height = height;
+        Views() {
+            this.title = ResourceManager.getConfig("view."+toString()+".title");
+            this.resource = ResourceManager.getConfig("view."+toString()+".path");
         }
 
-        abstract Scene getScene();
+        private Parent getRoot(){
+            try {
+                return FXMLLoader.load(getClass().getResource(resource));
+            } catch (IOException e) {
+                System.err.println("Desired fxml for "+title+" scene is not found");
+            }
+            return null;
+        }
+
+        @Override
+        public String toString() {
+            return name();
+        }
     }
 
     private static SceneManager instance;
@@ -68,16 +65,38 @@ public class SceneManager {
         stage.setResizable(false);
     }
 
-    public void changeScene(Scenes scene){
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        double x = (screenBounds.getWidth() - scene.width) / 2;
-        double y = (screenBounds.getHeight() - scene.height) / 2;
-//        stage = new Stage();
-//        stage.hide();
-        stage.setX(x);
-        stage.setY(y);
-        stage.setScene(scene.getScene());
-        stage.setTitle(scene.getTitle());
+    public void changeScene(Views view){
+        stage.setScene(getScene(view));
+        stage.setTitle(view.getTitle());
         stage.show();
+    }
+
+    public void addPopUpScene(Views view){
+        PopUpStage popUpStage = new PopUpStage(view.getTitle(), stage);
+        popUpStage.setScene(getScene(view));
+        popUpStage.showAndWait();
+    }
+
+    public void changeView(Views view){
+        stage.getScene().setRoot(view.getRoot());
+        stage.setTitle(view.getTitle());
+    }
+
+    private Scene getScene(Views view){
+        try {
+            return new Scene(FXMLLoader.load(getClass().getResource(view.resource)));
+        } catch (IOException e) {
+            System.err.println("Desired fxml for "+view.getTitle()+" scene is not found");
+        }
+        return null;
+    }
+
+    private class PopUpStage extends Stage{
+        private PopUpStage(String title, Stage primaryStage) {
+            this.setTitle(title);
+            this.setResizable(false);
+            this.initModality(Modality.APPLICATION_MODAL);
+            this.initOwner(primaryStage);
+        }
     }
 }
