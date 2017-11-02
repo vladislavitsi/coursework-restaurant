@@ -7,7 +7,7 @@ public class ClientController {
 
     @FXML
     public void exit(){
-        SceneManager.getInstance().changeScene(SceneManager.Views.LOGIN_CLIENT);
+        SceneManager.getInstance().setScene(SceneManager.Views.LOGIN_CLIENT);
     }
 
     @FXML

@@ -8,7 +8,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ResourceBundle;
 
 public class SceneManager {
     public enum Views {
@@ -48,7 +47,7 @@ public class SceneManager {
     }
 
     private static SceneManager instance;
-    private static Stage stage;
+    private static Stage primaryStage;
 
     private SceneManager(){
     }
@@ -61,25 +60,26 @@ public class SceneManager {
     }
 
     public void setStage(Stage stage){
-        SceneManager.stage = stage;
+        SceneManager.primaryStage = stage;
         stage.setResizable(false);
     }
 
-    public void changeScene(Views view){
-        stage.setScene(getScene(view));
-        stage.setTitle(view.getTitle());
-        stage.show();
+    public void setScene(Views view){
+        primaryStage.hide();
+        primaryStage.setScene(getScene(view));
+        primaryStage.setTitle(view.getTitle());
+        primaryStage.show();
     }
 
     public void addPopUpScene(Views view){
-        PopUpStage popUpStage = new PopUpStage(view.getTitle(), stage);
+        PopUpStage popUpStage = new PopUpStage(view.getTitle(), primaryStage);
         popUpStage.setScene(getScene(view));
         popUpStage.showAndWait();
     }
 
     public void changeView(Views view){
-        stage.getScene().setRoot(view.getRoot());
-        stage.setTitle(view.getTitle());
+        primaryStage.getScene().setRoot(view.getRoot());
+        primaryStage.setTitle(view.getTitle());
     }
 
     private Scene getScene(Views view){

@@ -6,13 +6,12 @@ import javafx.stage.Stage;
 public class Runner extends Application {
 
     public static void main(String[] args) {
-        new Thread(()->launch(args)).start();
+        launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
         SceneManager.getInstance().setStage(primaryStage);
-        SceneManager.getInstance().changeScene(SceneManager.Views.LOGIN_CLIENT);
-        primaryStage.show();
+        SceneManager.getInstance().setScene(SceneManager.Views.LOGIN_CLIENT);
     }
 }
