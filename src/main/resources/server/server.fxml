@@ -8,16 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="window"
-            maxHeight="-Infinity"
-            maxWidth="-Infinity"
-            minHeight="-Infinity"
-            minWidth="-Infinity"
-            styleClass="root"
-            stylesheets="@server.css"
-            xmlns="http://javafx.com/javafx/8.0.111"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.vladi.restaurant.server.ServerController">
+<AnchorPane id="window" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root" stylesheets="@server.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vladi.restaurant.server.ServerController">
    <children>
       <GridPane id="grid" layoutX="14.0" layoutY="3.0" prefHeight="90.0" prefWidth="378.0" styleClass="grid">
         <columnConstraints>
@@ -32,15 +23,15 @@
         </rowConstraints>
          <children>
             <Label text="Server name" />
-            <TextField prefHeight="31.0" prefWidth="215.0" GridPane.columnIndex="1" />
+            <TextField fx:id="serverName" prefHeight="31.0" prefWidth="215.0" GridPane.columnIndex="1" />
             <Label layoutX="10.0" layoutY="15.0" text="Port" GridPane.rowIndex="1" />
-            <TextField layoutX="139.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="31.0" prefWidth="215.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="port" layoutX="139.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="31.0" prefWidth="215.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label layoutX="11.0" layoutY="60.0" text="Password" GridPane.rowIndex="2" />
-            <TextField layoutX="135.0" layoutY="55.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="31.0" prefWidth="215.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="password" layoutX="135.0" layoutY="55.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="31.0" prefWidth="215.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label layoutX="11.0" layoutY="100.0" text="Status" GridPane.rowIndex="3" />
-            <Label layoutX="11.0" layoutY="139.0" text="Disabled" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="status" layoutX="11.0" layoutY="139.0" text="Disabled" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <Button layoutX="16.0" layoutY="167.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="378.0" text="Start" />
+      <Button fx:id="button" layoutX="16.0" layoutY="167.0" mnemonicParsing="false" onAction="#action" prefHeight="31.0" prefWidth="378.0" text="Start" />
    </children>
 </AnchorPane>

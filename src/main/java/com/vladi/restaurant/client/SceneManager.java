@@ -1,6 +1,6 @@
 package com.vladi.restaurant.client;
 
-import com.vladi.restaurant.client.managing.ResourceManager;
+import com.vladi.restaurant.common.ResourceManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,13 +22,15 @@ public class SceneManager {
         private final String title;
         private final String resource;
 
+        private static final String CONFIG_PROPERTY = "/client/config/config.properties";
+
         private String getTitle() {
             return title;
         }
 
         Views() {
-            this.title = ResourceManager.getConfig("view."+toString()+".title");
-            this.resource = ResourceManager.getConfig("view."+toString()+".path");
+            this.title = ResourceManager.getProperty(CONFIG_PROPERTY, "view."+toString()+".title");
+            this.resource = ResourceManager.getProperty(CONFIG_PROPERTY, "view."+toString()+".path");
         }
 
         private Parent getRoot(){

@@ -1,15 +1,18 @@
 package com.vladi.restaurant.client.uicontrollers;
 
 import com.vladi.restaurant.client.SceneManager;
-import com.vladi.restaurant.client.managing.ResourceManager;
-import javafx.event.ActionEvent;
+import com.vladi.restaurant.common.ResourceManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import java.util.ArrayList;
+
 public final class LoginController {
+
+    private static final String LOGIN_SETTINGS = "lastLoginInfo.txt";
 
     @FXML
     private TextField serverIp;
@@ -23,16 +26,18 @@ public final class LoginController {
 
     @FXML
     private void initialize() {
-        String[] strings = ResourceManager.getLastLoginInfo();
-        serverIp.appendText(strings[0]);
-        port.appendText(strings[1]);
+        ArrayList<String> strings = ResourceManager.getLastSettings(LOGIN_SETTINGS);
+        serverIp.appendText(strings.get(0));
+        port.appendText(strings.get(1));
     }
 
     @FXML
     public void implementConnect(){
         new Thread(()->{
-            String[] strings = {serverIp.getText(), port.getText()};
-            ResourceManager.saveLoginInfo(strings);
+            ArrayList<String> configurations = new ArrayList<>();
+            configurations.add(serverIp.getText());
+            configurations.add(port.getText());
+            ResourceManager.saveLastSettings(LOGIN_SETTINGS, configurations);
         }).start();
         SceneManager.getInstance().setScene(SceneManager.Views.CLIENT);
     }

@@ -16,14 +16,16 @@ public class Runner extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            primaryStage.setResizable(false);
-            primaryStage.setTitle("Server");
-            Parent root = FXMLLoader.load(getClass().getResource("/server/Server.fxml"));
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            setUpStage(primaryStage);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Template is not found");;
         }
+    }
+
+    private void setUpStage(Stage primaryStage) throws IOException{
+        primaryStage.setResizable(false);
+        primaryStage.setTitle("Server");
+        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/server/Server.fxml"))));
+        primaryStage.show();
     }
 }
