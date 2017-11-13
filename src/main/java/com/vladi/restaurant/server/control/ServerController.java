@@ -60,7 +60,7 @@ public class ServerController {
             configurations.add(button.getText());
             ResourceManager.saveLastSettings(SERVER_SETTINGS, configurations);
         }).start();
-        Server.getInstant().initialization();
+        Server.getInstant().initialization(serverName.getText(), Integer.valueOf(port.getText()), password.getText());
         serverName.setDisable(true);
         port.setDisable(true);
         password.setDisable(true);

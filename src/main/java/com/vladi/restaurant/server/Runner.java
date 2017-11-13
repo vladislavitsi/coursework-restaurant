@@ -25,7 +25,7 @@ public class Runner extends Application {
     private void setUpStage(Stage primaryStage) throws IOException{
         primaryStage.setResizable(false);
         primaryStage.setTitle("Server");
-        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/server/Server.fxml"))));
+        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/server/fxmls/server.fxml"))));
         primaryStage.show();
     }
 }

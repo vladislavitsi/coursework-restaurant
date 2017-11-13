@@ -37,7 +37,7 @@ public class SceneManager {
             try {
                 return FXMLLoader.load(getClass().getResource(resource));
             } catch (IOException e) {
-                System.err.println("Desired fxml for "+title+" scene is not found");
+                System.err.println("Desired fxmls for "+title+" scene is not found");
             }
             return null;
         }
@@ -88,7 +88,7 @@ public class SceneManager {
         try {
             return new Scene(FXMLLoader.load(getClass().getResource(view.resource)));
         } catch (IOException e) {
-            System.err.println("Des ired fxml for "+view.getTitle()+" scene is not found");
+            System.err.println("Desired fxmls for "+view.getTitle()+" scene is not found");
         }
         return null;
     }
