@@ -1,6 +1,8 @@
 package com.vladi.restaurant.client.uicontrollers;
 
-import com.vladi.restaurant.client.SceneManager;
+import com.vladi.restaurant.client.managing.Client;
+import com.vladi.restaurant.client.managing.SceneManager;
+import com.vladi.restaurant.client.managing.WrongPasswordException;
 import com.vladi.restaurant.common.ResourceManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -39,7 +41,13 @@ public final class LoginController {
             configurations.add(port.getText());
             ResourceManager.saveLastSettings(LOGIN_SETTINGS, configurations);
         }).start();
-        SceneManager.getInstance().setScene(SceneManager.Views.CLIENT);
+        try {
+            Client.getInstant().setConnection(serverIp.getText(), Integer.valueOf(port.getText()), passwordField.getText());
+            System.out.println(Client.getInstant().getRequestOut().toString());
+            SceneManager.getInstance().setScene(SceneManager.Views.CLIENT);
+        } catch (WrongPasswordException e) {
+
+        }
     }
 
     @FXML

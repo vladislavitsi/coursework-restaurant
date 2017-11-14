@@ -1,13 +1,10 @@
 package com.vladi.restaurant.server;
 
 import com.vladi.restaurant.common.pojo.Order;
-import com.vladi.restaurant.server.control.DBManager;
-import javafx.collections.ObservableList;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Server {
@@ -16,19 +13,23 @@ public class Server {
      */
     private static final Server instant = new Server();
     private Server(){
-        clientsList = new ArrayList<>();
+        subscribers = new LinkedList<>();
     }
     public static Server getInstant(){
         return instant;
     }
+
     /*
      * The Server
      */
     private String serverName;
     private int port;
     private String password;
-    private ServerSocket serverSocket;
-    private ArrayList<Client> clientsList;
+    private ServerSocket requestServerSocket;
+    private ServerSocket subscriptionServerSocket;
+    private LinkedList<Subscriber> subscribers;
+    private Thread listenToClients;
+    private Thread listenToSubscribers;
     private LinkedList<Order> newOrders;
     private LinkedList<Order> doneOrders;
 
@@ -37,34 +38,53 @@ public class Server {
         this.port = port;
         this.password = password;
         try {
-            serverSocket = new ServerSocket(port);
+            requestServerSocket = new ServerSocket(port);
+            subscriptionServerSocket = new ServerSocket(port+1);
+            System.out.println("Server is started");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        launchConnector();
-        System.out.println(DBManager.getMenuFromDatabase());
+        listenToClients();
+        listenToSubscribers();
     }
 
-    private void launchConnector(){
-        new Thread(()->{
+    private void listenToClients(){
+        listenToClients = new Thread(()->{
             while (true){
                 try {
-                    Socket newClientSocket = serverSocket.accept();
-                    Client newClient = createClient(newClientSocket);
-                    clientsList.add(newClient);
+                    Socket newClientSocketRequest = requestServerSocket.accept();
+                    ClientHandler newClient = createClient(newClientSocketRequest);
+                    new Thread(newClient).start();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        });
+        listenToClients.start();
+    }
+
+    private void listenToSubscribers(){
+        listenToSubscribers = new Thread(()->{
+            while (true){
+                try {
+                    Socket newClientSocketSubscription = subscriptionServerSocket.accept();
+                    Subscriber subscriber = new Subscriber(newClientSocketSubscription);
+                    subscribers.add(subscriber);
+                    new Thread(subscriber).start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        listenToSubscribers.start();
     }
 
     synchronized public boolean checkPassword(String password){
         return this.password.equals(password);
     }
 
-    private static Client createClient(Socket socket){
-        return new Client(socket);
+    private static ClientHandler createClient(Socket requestSocket){
+        return new ClientHandler(requestSocket);
     }
 
     public String getServerName() {
@@ -75,12 +95,12 @@ public class Server {
         return port;
     }
 
-    public ServerSocket getServerSocket() {
-        return serverSocket;
+    public ServerSocket getRequestServerSocket() {
+        return requestServerSocket;
     }
 
-    public ArrayList<Client> getClientsList() {
-        return clientsList;
+    public LinkedList<Subscriber> getSubscribers() {
+        return subscribers;
     }
 
     public LinkedList<Order> getNewOrders() {

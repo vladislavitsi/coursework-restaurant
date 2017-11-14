@@ -1,5 +1,6 @@
 package com.vladi.restaurant.client;
 
+import com.vladi.restaurant.client.managing.SceneManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

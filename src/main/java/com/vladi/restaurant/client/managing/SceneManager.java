@@ -1,4 +1,4 @@
-package com.vladi.restaurant.client;
+package com.vladi.restaurant.client.managing;
 
 import com.vladi.restaurant.common.ResourceManager;
 import javafx.fxml.FXMLLoader;

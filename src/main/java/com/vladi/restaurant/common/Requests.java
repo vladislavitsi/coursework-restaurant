@@ -9,45 +9,52 @@ import com.vladi.restaurant.server.control.DBManager;
 
 import java.io.*;
 import java.util.Date;
-import java.util.Scanner;
 
 public enum Requests {
     ECHO {
         @Override
-        synchronized public void response(final PrintWriter out, final Scanner in) {
-            out.print("Echo from "+Server.getInstant().getServerName()+" at "+new Date());
-            out.flush();
+        synchronized public void response(final DataOutputStream out, final DataInputStream in) {
+            Requests.send("Echo from "+Server.getInstant().getServerName()+" at "+new Date(), out);
         }
     },
     GET_MENU {
         @Override
-        synchronized public void response(final PrintWriter out, final Scanner in) {
+        synchronized public void response(final DataOutputStream out, final DataInputStream in) {
             Menu menu = DBManager.getMenuFromDatabase();
             String objectJson = new Gson().toJson(menu);
-            out.print(objectJson);
-            out.flush();
+            Requests.send(objectJson, out);
         }
     },
     GET_HISTORY {
         @Override
-        synchronized public void response(final PrintWriter out, final Scanner in) {
+        synchronized public void response(final DataOutputStream out, final DataInputStream in) {
             History history = DBManager.getHistoryFromDatabase();
             String objectJson = new Gson().toJson(history);
-            out.print(objectJson);
-            out.flush();
+            Requests.send(objectJson, out);
         }
     },
     PUT_ORDER {
         @Override
-        synchronized public void response(final PrintWriter out, final Scanner in) {
-            StringBuilder jsonOrder = new StringBuilder();
-            while (in.hasNext()){
-                jsonOrder.append(in.next());
+        synchronized public void response(final DataOutputStream out, final DataInputStream in) {
+            String jsonOrder = "";
+            try {
+                jsonOrder = in.readUTF();
+                Order order = new Gson().fromJson(jsonOrder, Order.class);
+                DBManager.putOrderToHistory(order);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            Order order = new Gson().fromJson(jsonOrder.toString(), Order.class);
-            DBManager.putOrderToHistory(order);
         }
     };
 
-    public abstract void response(final PrintWriter out, final Scanner in);
+    private synchronized static void send(String message, DataOutputStream out){
+        try {
+            out.writeUTF(message);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public abstract void response(final DataOutputStream out, final DataInputStream in);
 }
