@@ -1,7 +1,7 @@
 package com.vladi.restaurant.client.managing;
 
 import com.google.gson.Gson;
-import com.vladi.restaurant.common.Requests;
+import com.vladi.restaurant.common.ClientRequests;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -34,15 +34,32 @@ public class Client {
             requestSocket = new Socket(serverIp, serverPort);
             requestIn = new DataInputStream(requestSocket.getInputStream());
             requestOut = new DataOutputStream(requestSocket.getOutputStream());
-
-
-            send(serverPassword);
+            send(requestOut, serverPassword);
             Boolean result = requestIn.readBoolean();
             if (result){
                 subscriptionSocket = new Socket(serverIp, serverPort+1);
-                requestIn = new DataInputStream(subscriptionSocket.getInputStream());
-                requestOut = new DataOutputStream(subscriptionSocket.getOutputStream());
-                System.out.println("connection established");
+                subscriptionIn = new DataInputStream(subscriptionSocket.getInputStream());
+                subscriptionOut = new DataOutputStream(subscriptionSocket.getOutputStream());
+                send(subscriptionOut, serverPassword);
+                if(subscriptionIn.readBoolean()){
+                    new Thread(()->{
+                        while (true){
+                            try {
+                                String s = subscriptionIn.readUTF();
+                                System.out.println(s);
+                                s = subscriptionIn.readUTF();
+                                System.out.println(s);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+                    System.out.println("connection established");
+                }else {
+                    subscriptionIn.close();
+                    subscriptionOut.close();
+                    subscriptionSocket.close();
+                }
             }else {
                 System.out.println("The wrong password, sorry");
                 requestIn.close();
@@ -55,20 +72,19 @@ public class Client {
         }
     }
 
-    synchronized public void send(String message){
+    synchronized public void send(DataOutputStream outputStream, String message){
         try {
-            requestOut.writeUTF(message);
-            requestOut.flush();
+            outputStream.writeUTF(message);
+            outputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    synchronized public <T> T performRequest(Requests request, Class<T> tClass){
-        T object;
+    synchronized public <T> T performRequest(ClientRequests request, Class<T> tClass){
         StringBuilder response = new StringBuilder();
         try {
-            send(request.name());
+            send(requestOut, request.name());
             response.append(requestIn.readUTF());
         } catch (IOException e) {
             e.printStackTrace();

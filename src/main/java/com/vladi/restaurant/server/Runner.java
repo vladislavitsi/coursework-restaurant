@@ -1,8 +1,8 @@
 package com.vladi.restaurant.server;
 
+import com.vladi.restaurant.server.control.ServerController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -27,5 +27,8 @@ public class Runner extends Application {
         primaryStage.setTitle("Server");
         primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/server/fxmls/server.fxml"))));
         primaryStage.show();
+        primaryStage.setOnCloseRequest(event -> {
+            ServerController.exitApplication();
+        });
     }
 }

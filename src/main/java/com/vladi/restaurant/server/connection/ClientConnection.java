@@ -1,0 +1,23 @@
+package com.vladi.restaurant.server.connection;
+
+import com.vladi.restaurant.common.ClientRequests;
+import java.io.IOException;
+import java.net.Socket;
+
+public class ClientConnection extends Connection {
+
+    public ClientConnection(Socket socket, ClientKind clientKind) throws IOException {
+        super(socket, clientKind);
+    }
+
+    @Override
+    protected void running() throws IOException {
+        while (true) {
+            String message = getIn().readUTF();
+            System.out.println(message);
+            ClientRequests.valueOf(message).response(this);
+        }
+    }
+
+}
+

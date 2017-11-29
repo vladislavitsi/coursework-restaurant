@@ -1,4 +1,4 @@
-package com.vladi.restaurant.common.pojo;
+package com.vladi.restaurant.common.beans;
 
 import java.io.Serializable;
 

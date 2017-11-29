@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ServerController {
@@ -60,7 +61,7 @@ public class ServerController {
             configurations.add(button.getText());
             ResourceManager.saveLastSettings(SERVER_SETTINGS, configurations);
         }).start();
-        Server.getInstant().initialization(serverName.getText(), Integer.valueOf(port.getText()), password.getText());
+        Server.getInstance().initialization(serverName.getText(), Integer.valueOf(port.getText()), password.getText());
         serverName.setDisable(true);
         port.setDisable(true);
         password.setDisable(true);
@@ -69,10 +70,24 @@ public class ServerController {
     }
 
     private void stop(){
+        try {
+            Server.getInstance().closeConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         serverName.setDisable(false);
         port.setDisable(false);
         password.setDisable(false);
         button.setText("Start");
         status.setText("Disabled");
+    }
+
+    @FXML
+    public static void exitApplication() {
+        try {
+            Server.getInstance().closeConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

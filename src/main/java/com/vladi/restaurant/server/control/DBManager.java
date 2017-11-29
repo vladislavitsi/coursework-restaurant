@@ -5,21 +5,23 @@ import com.mongodb.MongoClientOptions;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.vladi.restaurant.common.ResourceManager;
-import com.vladi.restaurant.common.pojo.*;
+import com.vladi.restaurant.common.beans.*;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public class DBManager {
 
-    private static final String CONFIG_PROPERTY = "/server/config/config.properties";
+    private static final String CONFIG_PROPERTY = "server/config/config";
 
-    private static final String HOST = ResourceManager.getProperty(CONFIG_PROPERTY,"db.hostname");
-    private static final String DB_NAME = ResourceManager.getProperty(CONFIG_PROPERTY,"db.dbname");
-    private static final String MENU_COLLECTION_NAME = ResourceManager.getProperty(CONFIG_PROPERTY,"db.collections.menu");
-    private static final String HISTORY_COLLECTION_NAME = ResourceManager.getProperty(CONFIG_PROPERTY,"db.collections.history");
+    private static final String HOST = ResourceBundle.getBundle(CONFIG_PROPERTY).getString("db.hostname");
+    private static final String DB_NAME = ResourceBundle.getBundle(CONFIG_PROPERTY).getString("db.dbname");
+    private static final String MENU_COLLECTION_NAME = ResourceBundle.getBundle(CONFIG_PROPERTY).getString("db.collections.menu");
+    private static final String HISTORY_COLLECTION_NAME = ResourceBundle.getBundle(CONFIG_PROPERTY).getString("db.collections.history");
 
     synchronized public static Menu getMenuFromDatabase(){
         MongoCollection<Collection> collection = getDBCollection(HOST, DB_NAME, MENU_COLLECTION_NAME, Collection.class);
