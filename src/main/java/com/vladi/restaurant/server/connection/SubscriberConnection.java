@@ -1,6 +1,7 @@
 package com.vladi.restaurant.server.connection;
 
 import com.google.gson.Gson;
+import com.vladi.restaurant.common.ClientRequests;
 import com.vladi.restaurant.common.beans.Order;
 import com.vladi.restaurant.server.Server;
 
@@ -17,6 +18,10 @@ public class SubscriberConnection extends Connection implements Subscribable<Ord
 
     @Override
     protected void running() throws IOException {
+        while (true) {
+            String message = getIn().readUTF();
+            System.out.println(message);
+        }
     }
 
     @Override

@@ -2,9 +2,10 @@ package com.vladi.restaurant.common.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class History implements Serializable{
-    private ArrayList<Order> orders;
+    private List<Order> orders;
 
     public History(ArrayList<Order> orders) {
         this.orders = orders;
@@ -13,7 +14,7 @@ public class History implements Serializable{
     public History() {
     }
 
-    public ArrayList<Order> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 

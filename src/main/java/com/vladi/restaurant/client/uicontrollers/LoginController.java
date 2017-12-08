@@ -5,11 +5,14 @@ import com.vladi.restaurant.client.managing.SceneManager;
 import com.vladi.restaurant.client.managing.WrongPasswordException;
 import com.vladi.restaurant.common.ResourceManager;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public final class LoginController {
@@ -43,10 +46,11 @@ public final class LoginController {
         }).start();
         try {
             Client.getInstant().setConnection(serverIp.getText(), Integer.valueOf(port.getText()), passwordField.getText());
-            System.out.println(Client.getInstant().getRequestOut().toString());
             SceneManager.getInstance().setScene(SceneManager.Views.CLIENT);
         } catch (WrongPasswordException e) {
-
+            SceneManager.sendPopUpMessage(Alert.AlertType.ERROR, "Authorization error",null,"Input valid password");
+        } catch (IOException e) {
+            SceneManager.sendPopUpMessage(Alert.AlertType.ERROR, "Connect error",null,"Something went wrong");
         }
     }
 

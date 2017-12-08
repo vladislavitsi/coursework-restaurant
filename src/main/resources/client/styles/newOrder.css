@@ -1,4 +1,41 @@
 .root{
-    -fx-pref-width: 800px;
-    -fx-pref-height: 540px;
+    -fx-background-color: white;
+    -fx-pref-width: 812px;
+    -fx-pref-height: 552px;
+}
+
+
+ScrollPane{
+    /*-fx-background-color: white;*/
+}
+
+/*GridPane{*/
+    /*-fx-background-color: red;*/
+/*}*/
+
+.pane{
+    -fx-background-color: white;
+}
+
+.gridPane{
+    /*-fx-background-color: white;*/
+    /*-fx-background-radius: 5.0;*/
+}
+.category{
+    -fx-padding: 5px;
+    -fx-border-color: #f4f4f4;
+    -fx-background-color: #f4f4f4;
+    -fx-pref-width: 300px;
+}
+
+.category:hover{
+    -fx-background-color: #dcdcdc;
+    -fx-border-color: #dcdcdc;
+}
+.category Text{
+    -fx-text-alignment: left;
+}
+.category:focused, .category:pressed{
+    -fx-background-color: B7B7B7;
+    -fx-border-color: #b7b7b7;
 }

@@ -5,7 +5,6 @@ import com.vladi.restaurant.server.connection.ClientKind;
 import com.vladi.restaurant.server.connection.Connection;
 import com.vladi.restaurant.server.connection.ConnectionListener;
 import com.vladi.restaurant.server.connection.Subscribable;
-import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -122,12 +121,12 @@ public class Server {
             subscriberListener = null;
         }
 
-        if (requestServerSocket!=null && requestServerSocket.isBound()){
+        if (requestServerSocket!=null && !requestServerSocket.isClosed()){
             requestServerSocket.close();
             requestServerSocket = null;
         }
 
-        if (subscriptionServerSocket!=null && subscriptionServerSocket.isBound()){
+        if (subscriptionServerSocket!=null && !subscriptionServerSocket.isClosed()){
             subscriptionServerSocket.close();
             subscriptionServerSocket = null;
         }
@@ -137,6 +136,7 @@ public class Server {
         switch (clientKind){
             case SUBSCRIBER:
                 updateSubscriberClients.add((Subscribable<Order>)connection);
+                updateOrders();
                 break;
             case REQUEST_CLIENT:
                 requestClients.add(connection);
@@ -150,7 +150,7 @@ public class Server {
         }
     }
 
-    synchronized public void deleteFromSubscriberList(Connection connection){
+    synchronized public void deleteFromSubscriberList(Subscribable<Order> connection){
         if (updateSubscriberClients!=null){
             updateSubscriberClients.remove(connection);
         }

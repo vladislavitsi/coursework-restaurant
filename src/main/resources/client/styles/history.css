@@ -1,4 +1,32 @@
 .root{
-    -fx-pref-width: 800px;
-    -fx-pref-height: 540px;
+    -fx-background-color: white;
+    -fx-pref-width: 812px;
+    -fx-pref-height: 552px;
+}
+
+.pane, .pane:focused{
+    -fx-border-color: white;
+}
+
+.history{
+    -fx-padding: 5px;
+    -fx-border-color: #f4f4f4;
+    -fx-background-color: #f4f4f4;
+    -fx-pref-width: 300px;
+}
+
+.history:hover{
+    -fx-background-color: #dcdcdc;
+    -fx-border-color: #dcdcdc;
+}
+.history Text{
+    -fx-text-alignment: left;
+}
+.history:focused, .history:pressed{
+    -fx-background-color: B7B7B7;
+    -fx-border-color: #b7b7b7;
+}
+
+.historyGrid{
+    -fx-padding: 5px;
 }

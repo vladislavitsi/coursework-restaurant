@@ -4,6 +4,7 @@ import com.vladi.restaurant.common.ResourceManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -13,11 +14,8 @@ public class SceneManager {
     public enum Views {
         LOGIN_CLIENT,
         CLIENT,
-        MENU,
-        SETTINGS,
-        NEW_ORDER,
         HISTORY,
-        ORDER_REPRESENTATION;
+        NEW_ORDER;
 
         private final String title;
         private final String resource;
@@ -50,6 +48,7 @@ public class SceneManager {
 
     private static SceneManager instance;
     private static Stage primaryStage;
+    private static Views currentView;
 
     private SceneManager(){
     }
@@ -82,6 +81,7 @@ public class SceneManager {
     public void changeView(Views view){
         primaryStage.getScene().setRoot(view.getRoot());
         primaryStage.setTitle(view.getTitle());
+        currentView = view;
     }
 
     private Scene getScene(Views view){
@@ -99,6 +99,20 @@ public class SceneManager {
             this.setResizable(false);
             this.initModality(Modality.APPLICATION_MODAL);
             this.initOwner(primaryStage);
+        }
+    }
+
+    public static void sendPopUpMessage(Alert.AlertType type, String title, String header, String content){
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    public static void returnToLoginStage(){
+        if(!primaryStage.getScene().equals(getInstance().getScene(Views.LOGIN_CLIENT))){
+            getInstance().changeView(Views.LOGIN_CLIENT);
         }
     }
 }

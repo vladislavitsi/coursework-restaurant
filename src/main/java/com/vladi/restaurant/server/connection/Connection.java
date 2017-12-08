@@ -1,5 +1,6 @@
 package com.vladi.restaurant.server.connection;
 
+import com.vladi.restaurant.common.beans.Order;
 import com.vladi.restaurant.server.Server;
 
 import java.io.DataInputStream;
@@ -33,10 +34,7 @@ public abstract class Connection extends Thread {
                 send(false);
                 throw new IllegalAccessException();
             }
-        }catch (SocketException s){
-            System.out.println("The connection is over");
         } catch (IOException e) {
-            System.err.println("Exception in Thread"+Thread.currentThread().getName()+", Connection Handler");
             close();
         } catch (IllegalAccessException e) {
             System.out.println("Wrong password");
@@ -60,7 +58,7 @@ public abstract class Connection extends Thread {
                     Server.getInstance().deleteFromClientList(this);
                     break;
                 case SUBSCRIBER:
-                    Server.getInstance().deleteFromSubscriberList(this);
+                    Server.getInstance().deleteFromSubscriberList((Subscribable<Order>) this);
                     break;
             }
             interrupt();
@@ -69,22 +67,14 @@ public abstract class Connection extends Thread {
         }
     }
 
-    public void send(String message){
-        try {
-            out.writeUTF(message);
-            out.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void send(String message) throws IOException {
+        out.writeUTF(message);
+        out.flush();
     }
 
-    public void send(boolean bool){
-        try {
-            out.writeBoolean(bool);
-            out.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void send(boolean bool) throws IOException {
+        out.writeBoolean(bool);
+        out.flush();
     }
 
     public String get() {

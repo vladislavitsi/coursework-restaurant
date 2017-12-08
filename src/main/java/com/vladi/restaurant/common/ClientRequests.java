@@ -8,13 +8,18 @@ import com.vladi.restaurant.server.Server;
 import com.vladi.restaurant.server.connection.Connection;
 import com.vladi.restaurant.server.control.DBManager;
 
+import java.io.IOException;
 import java.util.Date;
 
 public enum ClientRequests {
     ECHO {
         @Override
         synchronized public void response(final Connection connection) {
-            connection.send("Echo from "+Server.getInstance().getServerName()+" at "+new Date());
+            try {
+                connection.send("Echo from "+Server.getInstance().getServerName()+" at "+new Date());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     },
     GET_MENU {
@@ -22,7 +27,11 @@ public enum ClientRequests {
         synchronized public void response(final Connection connection) {
             Menu menu = DBManager.getMenuFromDatabase();
             String objectJson = new Gson().toJson(menu);
-            connection.send(objectJson);
+            try {
+                connection.send(objectJson);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     },
     GET_HISTORY {
@@ -30,7 +39,11 @@ public enum ClientRequests {
         synchronized public void response(final Connection connection) {
             History history = DBManager.getHistoryFromDatabase();
             String objectJson = new Gson().toJson(history);
-            connection.send(objectJson);
+            try {
+                connection.send(objectJson);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     },
     PUT_ORDER {

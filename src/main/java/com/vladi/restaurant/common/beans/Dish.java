@@ -41,6 +41,26 @@ public class Dish implements Serializable{
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Dish)) return false;
+
+        Dish dish = (Dish) o;
+
+        return (name != null ? name.equals(dish.name) : dish.name == null)
+                && (desc != null ? desc.equals(dish.desc) : dish.desc == null)
+                && (price != null ? price.equals(dish.price) : dish.price == null);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (desc != null ? desc.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Dish{" +
                 "name='" + name + '\'' +

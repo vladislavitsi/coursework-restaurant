@@ -5,11 +5,12 @@ import org.bson.types.ObjectId;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class Order implements Serializable {
+public class Order implements Serializable, Comparable<Order> {
     private ObjectId id;
     private Date date;
-    private ArrayList<Dish> dishes;
+    private List<Dish> dishes;
 
     public Order(Date date, ArrayList<Dish> dishes) {
         this.date = date;
@@ -17,6 +18,14 @@ public class Order implements Serializable {
     }
 
     public Order() {
+    }
+
+    public USD totalPrice(){
+        USD cost = new USD(0);
+        for (Dish dish : dishes) {
+            cost = cost.add(new USD(Double.valueOf(dish.getPrice())));
+        }
+        return cost;
     }
 
     public ObjectId getId() {
@@ -35,11 +44,11 @@ public class Order implements Serializable {
         this.date = date;
     }
 
-    public ArrayList<Dish> getDishes() {
+    public List<Dish> getDishes() {
         return dishes;
     }
 
-    public void setDishes(ArrayList<Dish> dishes) {
+    public void setDishes(List<Dish> dishes) {
         this.dishes = dishes;
     }
 
@@ -50,5 +59,10 @@ public class Order implements Serializable {
                 ", date=" + date +
                 ", dishes=" + dishes +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Order o) {
+        return -date.compareTo(o.date);
     }
 }
