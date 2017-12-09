@@ -20,15 +20,15 @@ public class SceneManager {
         private final String title;
         private final String resource;
 
-        private static final String CONFIG_PROPERTY = "/client/config/config.properties";
+        public static final String CONFIG_PROPERTY = "/client/config/config.properties";
 
         private String getTitle() {
             return title;
         }
 
         Views() {
-            this.title = ResourceManager.getProperty(CONFIG_PROPERTY, "view."+toString()+".title");
-            this.resource = ResourceManager.getProperty(CONFIG_PROPERTY, "view."+toString()+".path");
+            this.title = ResourceManager.getProperty("view."+toString()+".title");
+            this.resource = ResourceManager.getProperty("view."+toString()+".path");
         }
 
         private Parent getRoot(){
@@ -48,7 +48,6 @@ public class SceneManager {
 
     private static SceneManager instance;
     private static Stage primaryStage;
-    private static Views currentView;
 
     private SceneManager(){
     }
@@ -81,7 +80,6 @@ public class SceneManager {
     public void changeView(Views view){
         primaryStage.getScene().setRoot(view.getRoot());
         primaryStage.setTitle(view.getTitle());
-        currentView = view;
     }
 
     private Scene getScene(Views view){

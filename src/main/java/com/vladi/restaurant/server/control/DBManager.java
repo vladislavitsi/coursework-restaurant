@@ -4,7 +4,6 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.vladi.restaurant.common.ResourceManager;
 import com.vladi.restaurant.common.beans.*;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -24,28 +23,26 @@ public class DBManager {
     private static final String HISTORY_COLLECTION_NAME = ResourceBundle.getBundle(CONFIG_PROPERTY).getString("db.collections.history");
 
     synchronized public static Menu getMenuFromDatabase(){
-        MongoCollection<Collection> collection = getDBCollection(HOST, DB_NAME, MENU_COLLECTION_NAME, Collection.class);
+        MongoCollection<Collection> collection = getDBCollection(MENU_COLLECTION_NAME, Collection.class);
         return new Menu(new ArrayList<>(getListFromMongoCollection(collection)));
     }
 
     synchronized public static History getHistoryFromDatabase(){
-        MongoCollection<Order> collection = getDBCollection(HOST, DB_NAME, HISTORY_COLLECTION_NAME, Order.class);
+        MongoCollection<Order> collection = getDBCollection(HISTORY_COLLECTION_NAME, Order.class);
         return new History(new ArrayList<>(getListFromMongoCollection(collection)));
     }
 
     synchronized public static void putOrderToHistory(Order order){
-        MongoCollection<Order> collection = getDBCollection(HOST, DB_NAME, HISTORY_COLLECTION_NAME, Order.class);
+        MongoCollection<Order> collection = getDBCollection(HISTORY_COLLECTION_NAME, Order.class);
         collection.insertOne(order);
     }
 
-    synchronized private static <T> MongoCollection<T> getDBCollection(final String host,
-                                                          final String dbName,
-                                                          final String collectionName,
-                                                          Class<T> tClass){
+    synchronized private static <T> MongoCollection<T> getDBCollection(final String collectionName,
+                                                                       Class<T> tClass){
         CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
                 fromProviders(PojoCodecProvider.builder().automatic(true).build()));
-        MongoClient mongoClient = new MongoClient(host, MongoClientOptions.builder().codecRegistry(pojoCodecRegistry).build());
-        MongoDatabase database =  mongoClient.getDatabase(dbName).withCodecRegistry(pojoCodecRegistry);
+        MongoClient mongoClient = new MongoClient(DBManager.HOST, MongoClientOptions.builder().codecRegistry(pojoCodecRegistry).build());
+        MongoDatabase database =  mongoClient.getDatabase(DBManager.DB_NAME).withCodecRegistry(pojoCodecRegistry);
         return database.getCollection(collectionName, tClass);
     }
 
@@ -57,7 +54,4 @@ public class DBManager {
         return list;
     }
 
-    public static void main(String[] args) {
-        System.out.println(HOST);
-    }
 }

@@ -9,8 +9,8 @@ import java.net.SocketException;
 
 public class ConnectionListener extends Thread{
 
-    private ServerSocket serverSocket;
-    private ClientKind clientKind;
+    private final ServerSocket serverSocket;
+    private final ClientKind clientKind;
 
     public ConnectionListener(ServerSocket serverSocket, ClientKind clientKind) {
         this.serverSocket = serverSocket;

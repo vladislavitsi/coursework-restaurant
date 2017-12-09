@@ -1,6 +1,6 @@
 package com.vladi.restaurant.server.connection;
 
-import com.vladi.restaurant.common.ClientRequests;
+import com.vladi.restaurant.common.Requests;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -15,7 +15,7 @@ public class ClientConnection extends Connection {
         while (true) {
             String message = getIn().readUTF();
             System.out.println(message);
-            ClientRequests.valueOf(message).response(this);
+            Requests.valueOf(message).response(this);
         }
     }
 

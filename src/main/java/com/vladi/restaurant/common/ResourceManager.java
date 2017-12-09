@@ -29,9 +29,9 @@ public abstract class ResourceManager {
         }
     }
 
-    public static String getProperty(final String propertyPath, final String key){
+    public static String getProperty(final String key){
         String value = "";
-        try (InputStream is = ResourceManager.class.getResourceAsStream(propertyPath)){
+        try (InputStream is = ResourceManager.class.getResourceAsStream(com.vladi.restaurant.client.managing.SceneManager.Views.CONFIG_PROPERTY)){
             Properties property = new Properties();
             property.load(is);
             value = property.getProperty(key);

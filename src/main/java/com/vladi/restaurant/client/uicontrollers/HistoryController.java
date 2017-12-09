@@ -2,7 +2,7 @@ package com.vladi.restaurant.client.uicontrollers;
 
 import com.vladi.restaurant.client.managing.Client;
 import com.vladi.restaurant.client.managing.SceneManager;
-import com.vladi.restaurant.common.ClientRequests;
+import com.vladi.restaurant.common.Requests;
 import com.vladi.restaurant.common.beans.Dish;
 import com.vladi.restaurant.common.beans.History;
 import com.vladi.restaurant.common.beans.Order;
@@ -30,18 +30,15 @@ public class HistoryController {
     private GridPane historyDetails;
 
 
-    private static final String DATE_NEW_FORMAT = "hh:mm:ss  MMMM d, yyyy";
-
-    private History history;
+    private static final String DATE_NEW_FORMAT = "HH:mm:ss MMMM d, yyyy";
 
     @FXML
     public void initialize(){
-        history = Client.getInstant().performRequest(ClientRequests.GET_HISTORY, History.class);
+        History history = Client.getInstant().performRequest(Requests.GET_HISTORY, History.class);
         List<Order> orders = history.getOrders();
         Collections.sort(orders);
         historyToken.getChildren().clear();
-        SimpleDateFormat newDateFormat = new SimpleDateFormat(DATE_NEW_FORMAT);
-        newDateFormat.setTimeZone(TimeZone.getDefault());
+        SimpleDateFormat newDateFormat = new SimpleDateFormat(DATE_NEW_FORMAT, Locale.ENGLISH);
         int i=0;
         for (Order order : orders) {
             Button button = new Button(newDateFormat.format(order.getDate()));

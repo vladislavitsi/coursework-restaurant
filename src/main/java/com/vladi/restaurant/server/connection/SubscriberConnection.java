@@ -1,16 +1,14 @@
 package com.vladi.restaurant.server.connection;
 
 import com.google.gson.Gson;
-import com.vladi.restaurant.common.ClientRequests;
 import com.vladi.restaurant.common.beans.Order;
-import com.vladi.restaurant.server.Server;
+import com.vladi.restaurant.common.beans.Orders;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.List;
+import java.util.*;
 
-public class SubscriberConnection extends Connection implements Subscribable<Order> {
+public class SubscriberConnection extends Connection implements Subscribable<Integer, Order> {
 
     public SubscriberConnection(Socket socket, ClientKind clientKind) throws IOException {
         super(socket, clientKind);
@@ -25,8 +23,8 @@ public class SubscriberConnection extends Connection implements Subscribable<Ord
     }
 
     @Override
-    public void update(List<Order> orders) {
-        String jsonOrders = new Gson().toJson(orders);
+    public void update(SortedMap<Integer, Order> m) {
+        String jsonOrders = new Gson().toJson(new Orders(new ArrayList<>(m.keySet())));
         try {
             getOut().writeUTF(jsonOrders);
             getOut().flush();
@@ -34,6 +32,4 @@ public class SubscriberConnection extends Connection implements Subscribable<Ord
             e.printStackTrace();
         }
     }
-
-
 }

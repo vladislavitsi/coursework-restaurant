@@ -11,7 +11,7 @@ import com.vladi.restaurant.server.control.DBManager;
 import java.io.IOException;
 import java.util.Date;
 
-public enum ClientRequests {
+public enum Requests {
     ECHO {
         @Override
         synchronized public void response(final Connection connection) {
@@ -60,7 +60,7 @@ public enum ClientRequests {
         @Override
         public void response(Connection connection) {
             String jsonDoneOrder = connection.get();
-            Order doneOrder = new Gson().fromJson(jsonDoneOrder, Order.class);
+            Integer doneOrder = new Gson().fromJson(jsonDoneOrder, Integer.class);
             Server.getInstance().orderDone(doneOrder);
             Server.getInstance().updateOrders();
         }
@@ -69,7 +69,7 @@ public enum ClientRequests {
         @Override
         public void response(Connection connection) {
             String jsonDoneOrder = connection.get();
-            Order doneOrder = new Gson().fromJson(jsonDoneOrder, Order.class);
+            Integer doneOrder = new Gson().fromJson(jsonDoneOrder, Integer.class);
             Server.getInstance().deleteOldOrder(doneOrder);
             Server.getInstance().updateOrders();
         }

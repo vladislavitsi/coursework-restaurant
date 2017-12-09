@@ -35,7 +35,7 @@ public class Server {
     private ConnectionListener subscriberListener;
 
     private List<Connection> requestClients;
-    private List<Subscribable<Order>> updateSubscriberClients;
+    private List<Subscribable<Integer, Order>> updateSubscriberClients;
 
     private OrderHandler orderHandler;
 
@@ -65,11 +65,11 @@ public class Server {
         }
     }
 
-    public synchronized void orderDone(Order doneOrder){
+    public synchronized void orderDone(int doneOrder){
         orderHandler.orderDone(doneOrder);
     }
 
-    public synchronized void deleteOldOrder(Order oldOrder){
+    public synchronized void deleteOldOrder(Integer oldOrder){
         orderHandler.deleteOldOrder(oldOrder);
     }
 
@@ -105,7 +105,7 @@ public class Server {
 
         if(updateSubscriberClients!=null){
             System.out.println(updateSubscriberClients.size());
-            for (Subscribable<Order> updateSubscriberClient : updateSubscriberClients) {
+            for (Subscribable<Integer, Order> updateSubscriberClient : updateSubscriberClients) {
                 updateSubscriberClient.close();
             }
             updateSubscriberClients = null;
@@ -135,7 +135,7 @@ public class Server {
     synchronized public void addToList(ClientKind clientKind, Connection connection){
         switch (clientKind){
             case SUBSCRIBER:
-                updateSubscriberClients.add((Subscribable<Order>)connection);
+                updateSubscriberClients.add((Subscribable<Integer, Order>)connection);
                 updateOrders();
                 break;
             case REQUEST_CLIENT:
@@ -150,7 +150,7 @@ public class Server {
         }
     }
 
-    synchronized public void deleteFromSubscriberList(Subscribable<Order> connection){
+    synchronized public void deleteFromSubscriberList(Subscribable<Integer, Order> connection){
         if (updateSubscriberClients!=null){
             updateSubscriberClients.remove(connection);
         }

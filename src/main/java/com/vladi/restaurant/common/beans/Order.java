@@ -53,6 +53,26 @@ public class Order implements Serializable, Comparable<Order> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Order)) return false;
+
+        Order order = (Order) o;
+
+        return (id != null ? id.equals(order.id) : order.id == null)
+                && (date != null ? date.equals(order.date) : order.date == null)
+                && (dishes != null ? dishes.equals(order.dishes) : order.dishes == null);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (dishes != null ? dishes.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +

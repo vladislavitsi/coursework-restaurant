@@ -1,6 +1,8 @@
 package com.vladi.restaurant.client.managing;
 
-import com.vladi.restaurant.common.ClientRequests;
+import com.google.gson.Gson;
+import com.vladi.restaurant.common.Requests;
+import com.vladi.restaurant.common.beans.Orders;
 
 import java.io.IOException;
 
@@ -24,24 +26,29 @@ public class Subscriber extends Connection {
     }
 
     @Override
-    public synchronized <T> T performRequest(ClientRequests request, Class<T> tClass){
+    public synchronized <T> T performRequest(Requests request, Class<T> tClass){
         throw new IllegalStateException();
     }
 
-    class SubscriberListenerThread extends Thread{
+    class SubscriberListenerThread extends Thread {
         @Override
         public void run() {
             try {
-                while (true){
-                    String s = getInputStream().readUTF();
-                    System.out.println(s);
-                    s = getInputStream().readUTF();
-                    System.out.println(s);
+                while (true) {
+                    Orders orders = new Gson().fromJson(getInputStream().readUTF(), Orders.class);
+                    OrdersHandler.getInstance().setNewOrders(orders.getList());
+
+                    orders = new Gson().fromJson(getInputStream().readUTF(), Orders.class);
+                    OrdersHandler.getInstance().setDoneOrders(orders.getList());
+
+                    OrdersHandler.getInstance().update();
                 }
             } catch (IOException e) {
                 close();
-//                SceneManager.returnToLoginStage();
             }
         }
     }
+
+
+
 }

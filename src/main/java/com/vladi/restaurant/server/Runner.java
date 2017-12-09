@@ -18,7 +18,7 @@ public class Runner extends Application {
         try {
             setUpStage(primaryStage);
         } catch (IOException e) {
-            System.err.println("Template is not found");;
+            System.err.println("Template is not found");
         }
     }
 
@@ -27,8 +27,6 @@ public class Runner extends Application {
         primaryStage.setTitle("Server");
         primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/server/fxmls/server.fxml"))));
         primaryStage.show();
-        primaryStage.setOnCloseRequest(event -> {
-            ServerController.exitApplication();
-        });
+        primaryStage.setOnCloseRequest(event -> ServerController.exitApplication());
     }
 }

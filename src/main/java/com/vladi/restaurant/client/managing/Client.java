@@ -1,6 +1,7 @@
 package com.vladi.restaurant.client.managing;
 
-import com.vladi.restaurant.common.ClientRequests;
+import com.vladi.restaurant.common.Requests;
+
 import java.io.IOException;
 
 public class Client {
@@ -25,6 +26,7 @@ public class Client {
 
     public void setConnection(String serverIp, int serverPort, String serverPassword) throws WrongPasswordException, IOException {
         try {
+            OrdersHandler.getInstance();
             requestConnection = new RequestConnection();
             requestConnection.connect(serverIp, serverPort, serverPassword);
             subscriber = new Subscriber();
@@ -54,7 +56,7 @@ public class Client {
         }
     }
 
-    synchronized public <T> T performRequest(ClientRequests request, Class<T> tClass) {
+    synchronized public <T> T performRequest(Requests request, Class<T> tClass) {
         return requestConnection.performRequest(request, tClass);
     }
 
@@ -62,7 +64,4 @@ public class Client {
         return requestConnection;
     }
 
-    public Connection getSubscriber() {
-        return subscriber;
-    }
 }

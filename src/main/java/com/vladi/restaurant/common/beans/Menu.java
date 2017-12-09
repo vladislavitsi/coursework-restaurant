@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Menu implements Serializable{
 
-    private ArrayList<Collection> collections;
+    private final ArrayList<Collection> collections;
 
     public Menu(ArrayList<Collection> collections) {
         this.collections = collections;

@@ -7,16 +7,15 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.SocketException;
 
 public abstract class Connection extends Thread {
 
-    private Socket socket;
+    private final Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
     private ClientKind clientKind;
 
-    public Connection(Socket socket, ClientKind clientKind) throws IOException {
+    Connection(Socket socket, ClientKind clientKind) throws IOException {
         this.socket = socket;
         out = new DataOutputStream(socket.getOutputStream());
         in = new DataInputStream(socket.getInputStream());
@@ -58,7 +57,7 @@ public abstract class Connection extends Thread {
                     Server.getInstance().deleteFromClientList(this);
                     break;
                 case SUBSCRIBER:
-                    Server.getInstance().deleteFromSubscriberList((Subscribable<Order>) this);
+                    Server.getInstance().deleteFromSubscriberList((Subscribable<Integer, Order>) this);
                     break;
             }
             interrupt();
@@ -87,10 +86,6 @@ public abstract class Connection extends Thread {
     }
 
     protected abstract void running() throws IOException;
-
-    public Socket getSocket() {
-        return socket;
-    }
 
     public DataInputStream getIn() {
         return in;

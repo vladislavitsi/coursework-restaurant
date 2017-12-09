@@ -1,9 +1,9 @@
 package com.vladi.restaurant.server.connection;
 
-import java.util.List;
+import java.util.SortedMap;
 
-public interface Subscribable <T>{
-    void update(List<T> t);
+public interface Subscribable <K, V>{
+    void update(SortedMap<K, V> t);
 
     void close();
 }

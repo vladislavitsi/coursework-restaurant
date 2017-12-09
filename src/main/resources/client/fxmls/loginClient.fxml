@@ -9,26 +9,25 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane onKeyPressed="#submit" styleClass="root" stylesheets="@../styles/loginClient.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vladi.restaurant.client.uicontrollers.LoginController">
+<AnchorPane onKeyPressed="#submit" styleClass="root" stylesheets="@../styles/general.css, @../styles/loginClient.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vladi.restaurant.client.uicontrollers.LoginController">
     <children>
         <GridPane id="grid" layoutX="14.0" layoutY="3.0" prefHeight="121.0" prefWidth="390.0" styleClass="grid">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="187.0" minWidth="10.0" prefWidth="129.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.0" minWidth="10.0" prefWidth="256.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="187.0" minWidth="10.0" prefWidth="129.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.0" minWidth="10.0" prefWidth="256.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
-            <children>
-                <Label text="Server Ip" />
-                <TextField fx:id="serverIp" prefHeight="31.0" prefWidth="231.0" GridPane.columnIndex="1" />
-                <Label layoutX="10.0" layoutY="15.0" text="Port" GridPane.rowIndex="1" />
-                <TextField fx:id="port" layoutX="139.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="31.0" prefWidth="215.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Label layoutX="11.0" layoutY="60.0" text="Password" GridPane.rowIndex="2" />
-            <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            </children>
+            <Label text="Server Ip"/>
+            <TextField fx:id="serverIp" prefHeight="31.0" prefWidth="231.0" GridPane.columnIndex="1"/>
+            <Label layoutX="10.0" layoutY="15.0" text="Port" GridPane.rowIndex="1"/>
+            <TextField fx:id="port" layoutX="139.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity"
+                       prefHeight="31.0" prefWidth="215.0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <Label layoutX="11.0" layoutY="60.0" text="Password" GridPane.rowIndex="2"/>
+            <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
         </GridPane>
         <Button fx:id="connect" layoutX="11.0" layoutY="125.0" mnemonicParsing="false" onAction="#implementConnect" prefHeight="31.0" prefWidth="391.0" text="Connect" />
     </children>

@@ -1,7 +1,7 @@
 package com.vladi.restaurant.client.managing;
 
 import com.google.gson.Gson;
-import com.vladi.restaurant.common.ClientRequests;
+import com.vladi.restaurant.common.Requests;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -52,7 +52,7 @@ public abstract class Connection {
         }
     }
 
-    synchronized public <T> T performRequest(ClientRequests request, Class<T> tClass) {
+    synchronized public <T> T performRequest(Requests request, Class<T> tClass) {
         String response = "";
         try {
             send(request.name());
@@ -69,10 +69,6 @@ public abstract class Connection {
     }
 
     protected abstract void adjust();
-
-    public Socket getSocket() {
-        return socket;
-    }
 
     public DataOutputStream getOutputStream() {
         return outputStream;

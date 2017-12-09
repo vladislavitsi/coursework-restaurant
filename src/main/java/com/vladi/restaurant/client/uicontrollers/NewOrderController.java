@@ -3,7 +3,7 @@ package com.vladi.restaurant.client.uicontrollers;
 import com.google.gson.Gson;
 import com.vladi.restaurant.client.managing.Client;
 import com.vladi.restaurant.client.managing.SceneManager;
-import com.vladi.restaurant.common.ClientRequests;
+import com.vladi.restaurant.common.Requests;
 import com.vladi.restaurant.common.beans.*;
 import com.vladi.restaurant.common.beans.Collection;
 import com.vladi.restaurant.common.beans.Menu;
@@ -16,7 +16,7 @@ import javafx.scene.layout.Region;
 import java.io.IOException;
 import java.util.*;
 
-import static com.vladi.restaurant.common.ClientRequests.PUT_ORDER;
+import static com.vladi.restaurant.common.Requests.PUT_ORDER;
 
 public class NewOrderController {
 
@@ -40,7 +40,7 @@ public class NewOrderController {
     @FXML
     public void initialize() throws IOException {
         orderMap = new HashMap<>();
-        Menu menu = Client.getInstant().performRequest(ClientRequests.GET_MENU, Menu.class);
+        Menu menu = Client.getInstant().performRequest(Requests.GET_MENU, Menu.class);
         int i = 0;
         for (Collection collection : menu.getCollections()) {
             Button category = new Button();

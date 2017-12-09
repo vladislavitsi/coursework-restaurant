@@ -1,18 +1,25 @@
 package com.vladi.restaurant.client.uicontrollers;
 
-import com.google.gson.Gson;
 import com.vladi.restaurant.client.managing.Client;
+import com.vladi.restaurant.client.managing.OrdersHandler;
 import com.vladi.restaurant.client.managing.SceneManager;
-import com.vladi.restaurant.common.ClientRequests;
-import com.vladi.restaurant.common.beans.History;
-import com.vladi.restaurant.common.beans.Order;
 import javafx.fxml.FXML;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
+import javafx.scene.layout.GridPane;
 
 public class ClientController {
+
+    @FXML
+    private GridPane prepareGrid;
+
+    @FXML
+    private GridPane preparedGrid;
+
+    @FXML
+    public void initialize(){
+        OrdersHandler.getInstance().setPrepareGrid(prepareGrid);
+        OrdersHandler.getInstance().setPreparedGrid(preparedGrid);
+        OrdersHandler.getInstance().update();
+    }
 
     @FXML
     public void exit(){
@@ -28,12 +35,12 @@ public class ClientController {
      @FXML
     public void openHistory(){
         SceneManager.getInstance().changeView(SceneManager.Views.HISTORY);
-//         System.out.println(Client.getInstant().performRequest(ClientRequests.GET_HISTORY, History.class));
      }
 
     @FXML
     public static void exitApplication() {
         Client.getInstant().close();
     }
+
 
 }

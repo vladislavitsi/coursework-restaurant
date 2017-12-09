@@ -4,23 +4,10 @@
     -fx-pref-height: 552px;
 }
 
-
-ScrollPane{
-    /*-fx-background-color: white;*/
-}
-
-/*GridPane{*/
-    /*-fx-background-color: red;*/
-/*}*/
-
 .pane{
     -fx-background-color: white;
 }
 
-.gridPane{
-    /*-fx-background-color: white;*/
-    /*-fx-background-radius: 5.0;*/
-}
 .category{
     -fx-padding: 5px;
     -fx-border-color: #f4f4f4;
